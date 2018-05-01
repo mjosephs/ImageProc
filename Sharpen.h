@@ -1,4 +1,4 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 
-cv::Mat sharpen(cv::Mat img);
+void sharpen(cv::Mat img);

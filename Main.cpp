@@ -1,5 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include "Sharpen.h"
 
 using namespace std;
 using namespace cv;
@@ -11,7 +12,7 @@ int main(int argc, char** argv) {
 	while(1)
 	{
 		cout << "Choose what to do with image\n";
-		cout << "1. Show imag\n";
+		cout << "1. Show image\n";
 
 		//making sure input is an int before continuing
 		while(cout << "Input: " && !(cin >> choice))
@@ -27,6 +28,9 @@ int main(int argc, char** argv) {
 					 	imshow("Image Show", img);
 						waitKey(0);
 						destroyWindow("Image Show");
+						break;
+
+			case 2:		sharpen(img);
 						break;
 
 			default : 	cout << "Invalid input\n";
