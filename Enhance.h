@@ -3,4 +3,4 @@
 
 using namespace cv;
 
-void Enhance(Mat img);
+Mat Enhance(Mat img);

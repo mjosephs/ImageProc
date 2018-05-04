@@ -6,16 +6,26 @@
 using namespace std;
 using namespace cv;
 
+//general display image function
+void displayImage(Mat mimg){
+	cv::namedWindow("Image Out", cv::WINDOW_AUTOSIZE);
+	imshow("Image Out", mimg);
+	cv::waitKey(0);
+	cv::destroyWindow("Image Out");
+};
+
 int main(int argc, char** argv) {
 	Mat img = imread(argv[1]);
 	int choice;
+	Mat img_save;
 
 	while (1)
 	{
-		cout << "Choose what to do with image\n";
+		cout << "\nChoose what to do with image\n";
 		cout << "1. Show image\n";
 		cout << "2. Sharpen image\n";
 		cout << "3. Enhance image using histogram equalization\n";
+		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
 		while (cout << "Input: " && !(cin >> choice))
@@ -27,19 +37,26 @@ int main(int argc, char** argv) {
 
 		switch (choice)
 		{
-		case 1:	namedWindow("Image Show", WINDOW_AUTOSIZE);
-			imshow("Image Show", img);
-			waitKey(0);
-			destroyWindow("Image Show");
-			break;
+		case 1:	 namedWindow("Image Show", WINDOW_AUTOSIZE);
+				imshow("Image Show", img);
+				waitKey(0);
+				destroyWindow("Image Show");
+				break;
 
-		case 2:		sharpen(img);
-			break;
+		case 2:	 img_save = sharpen(img);
+				displayImage(img_save);
+				break;
 
-		case 3:		Enhance(img);
-			break;
-		default: 	cout << "Invalid input\n";
-			break;
+		case 3:	 img_save = Enhance(img);
+				displayImage(img_save);
+				break;
+
+		case 0:	 imwrite("output.jpg", img_save);
+				cout << "Saved to output.jpg in working directory\n";
+				break;
+
+		default:  cout << "Invalid input\n";
+				break;
 		}
 	}
 

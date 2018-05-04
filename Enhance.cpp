@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cv;
 
-void Enhance(Mat img) {
+Mat Enhance(Mat img) {
 	if (img.channels() >= 3) {
 		Mat ycrcb;
 		cvtColor(img, ycrcb, CV_BGR2YCrCb);
@@ -19,10 +19,14 @@ void Enhance(Mat img) {
 		merge(channels, ycrcb);
 
 		cvtColor(ycrcb, result, CV_YCrCb2BGR);
-	}
 
+		return result;
+	}
+	//moved to main
+	/*
 	namedWindow("image", WINDOW_NORMAL);
 	imshow("image", img);
 	waitKey(0);
 	destroyWindow("image");
+	*/
 }
