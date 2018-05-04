@@ -37,10 +37,7 @@ int main(int argc, char** argv) {
 
 		switch (choice)
 		{
-		case 1:	 namedWindow("Image Show", WINDOW_AUTOSIZE);
-				imshow("Image Show", img);
-				waitKey(0);
-				destroyWindow("Image Show");
+		case 1:	 displayImage(img);
 				break;
 
 		case 2:	 img_save = sharpen(img);
