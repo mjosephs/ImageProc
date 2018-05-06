@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Sharpen.h"
 #include "Enhance.h"
+#include "blacknwhite.h"
 
 using namespace std;
 using namespace cv;
@@ -25,6 +26,7 @@ int main(int argc, char** argv) {
 		cout << "1. Show image\n";
 		cout << "2. Sharpen image\n";
 		cout << "3. Enhance image using histogram equalization\n";
+		cout << "4. Make image black and white\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
@@ -47,7 +49,11 @@ int main(int argc, char** argv) {
 		case 3:	 img_save = Enhance(img);
 				displayImage(img_save);
 				break;
-
+				
+		case 4: img_save = blacknwhite(img);
+				displayImage(img_save);
+				break;
+				
 		case 0:	 imwrite("output.jpg", img_save);
 				cout << "Saved to output.jpg in working directory\n";
 				break;
