@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
 	Mat img = imread(argv[1]);
 	int choice;
 	Mat img_save;
+	int filterSize = 0;
 
 	while (1)
 	{
@@ -30,7 +31,7 @@ int main(int argc, char** argv) {
 		cout << "3. Enhance image using histogram equalization\n";
 		cout << "4. Make image black and white\n";
 		cout << "5. Binary threshold the image with a slider (press Escape to finish)\n";
-		cout << "6. 3x3 Median Filter\n";
+		cout << "6. Variable Median Filter\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
@@ -61,7 +62,14 @@ int main(int argc, char** argv) {
 		case 5: img_save = thresholding(img);
 			break;
 
-		case 6:	 img_save = median(img);
+		case 6:	 
+			cout << "Input filter size. Must be an odd number > 2" << endl;
+			cin >> filterSize;
+			while (filterSize < 3 || (filterSize % 2) == 0) {
+				cout << "Invalid filter size. Try again." << endl;
+				cin >> filterSize;
+			}
+			img_save = variableMedian(img, filterSize);
 			displayImage(img_save);
 			break;
 		
