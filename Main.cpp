@@ -6,23 +6,26 @@
 #include "MedianFilter.h"
 #include "thresholding.h"
 #include "colorcorrection.h"
+#include "Rotation.h"
 
 using namespace std;
 using namespace cv;
 
 //general display image function
 void displayImage(Mat mimg){
-	cv::namedWindow("Image Out", cv::WINDOW_AUTOSIZE);
+	namedWindow("Image Out", WINDOW_AUTOSIZE);
 	imshow("Image Out", mimg);
-	cv::waitKey(0);
-	cv::destroyWindow("Image Out");
+	waitKey(0);
+	destroyWindow("Image Out");
 };
+
 
 int main(int argc, char** argv) {
 	Mat img = imread(argv[1]);
 	int choice;
 	Mat img_save;
 	int filterSize = 0;
+	double angle;
 
 	while (1)
 	{
@@ -34,6 +37,7 @@ int main(int argc, char** argv) {
 		cout << "5. Binary threshold the image with a slider (press Escape to finish)\n";
 		cout << "6. Variable Median Filter\n";
 		cout << "7. Color correct image with brightness/contrast (Escape to finish)\n";
+		cout << "8. Rotate image by certain degree. Also enter the degree of rotation\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
@@ -76,6 +80,12 @@ int main(int argc, char** argv) {
 			break;
 
 		case 7: img_save = colorCorrection(img);
+				break;
+
+		case 8: cout << "Enter angle of rotation" << endl;
+				cin >> angle;
+				img_save = Rotation(img, angle);
+				displayImage(img_save);
 				break;
 		
 		case 0:	 imwrite("output.jpg", img_save);
