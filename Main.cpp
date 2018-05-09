@@ -7,6 +7,17 @@
 #include "thresholding.h"
 #include "colorcorrection.h"
 
+/*
+Using OpenCV library found at https://opencv.org/
+
+This a CLI based image processing toolbox implementing some basic processing techniques
+
+Matthew Josephs
+Renjie Zhou
+Brian Jefferson
+Sebastian Pokrywa
+*/
+
 using namespace std;
 using namespace cv;
 
@@ -31,7 +42,7 @@ int main(int argc, char** argv) {
 		cout << "2. Sharpen image\n";
 		cout << "3. Enhance image using histogram equalization\n";
 		cout << "4. Make image black and white\n";
-		cout << "5. Binary threshold the image with a slider (press Escape to finish)\n";
+		cout << "5. Globally threshold the image with a slider (press Escape to finish)\n";
 		cout << "6. Variable Median Filter\n";
 		cout << "7. Color correct image with brightness/contrast (Escape to finish)\n";
 		cout << "0. Save modified image to disk\n";
