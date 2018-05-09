@@ -5,6 +5,7 @@
 #include "blacknwhite.h"
 #include "MedianFilter.h"
 #include "thresholding.h"
+#include "colorcorrection.h"
 
 using namespace std;
 using namespace cv;
@@ -32,6 +33,7 @@ int main(int argc, char** argv) {
 		cout << "4. Make image black and white\n";
 		cout << "5. Binary threshold the image with a slider (press Escape to finish)\n";
 		cout << "6. Variable Median Filter\n";
+		cout << "7. Color correct image with brightness/contrast\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
@@ -60,7 +62,7 @@ int main(int argc, char** argv) {
 				break;
 
 		case 5: img_save = thresholding(img);
-			break;
+				break;
 
 		case 6:	 
 			cout << "Input filter size. Must be an odd number > 2" << endl;
@@ -72,6 +74,9 @@ int main(int argc, char** argv) {
 			img_save = variableMedian(img, filterSize);
 			displayImage(img_save);
 			break;
+
+		case 7: img_save = colorCorrection(img);
+				break;
 		
 		case 0:	 imwrite("output.jpg", img_save);
 				cout << "Saved to output.jpg in working directory\n";
