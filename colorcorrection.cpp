@@ -6,8 +6,8 @@ int beta = 0;
 int beta_bgr[4] = {0, 0, 0, 0};
 int channels = 3;
 const char* bar_rgb = "Blue = 0\nGreen = 1\nRed = 2\nRGB = 3\n";
-const char* bar_bri = "Brightness: ";
-const char* bar_con = "Contrast: \n(Value is divided by 100)";
+const char* bar_bri = "Brightness:";
+const char* bar_con = "Contrast:";
 
 cv::Mat img;
 cv::Mat result;
