@@ -1,5 +1,6 @@
 #include "colorcorrection.h"
 
+bool check = false;
 int alpha = 100;
 int alpha_bgr[4] = {100, 100, 100, 100};
 int beta = 0;
@@ -43,20 +44,15 @@ cv::Mat colorCorrection(cv::Mat input){
     }
 }
 
-
 void modColor(){
     int alphaval = alpha;
-    int betaval = beta;
+    int betaval = beta;  
     if(channels < 3){
         for (int y = 0; y < img.rows; y++){
             for(int x = 0; x < img.cols; x++){
                 result.at<cv::Vec3b>(y,x)[channels] = cv::saturate_cast<uchar>((alphaval/100.0) *(img.at<cv::Vec3b>(y,x)[channels]) + betaval);
             }
         }
-        //used when channels get set to remember trackbar pos
-        alpha_bgr[channels] = alphaval;
-        beta_bgr[channels] = betaval;
-
     }else{
         for (int y = 0; y < img.rows; y++){
             for(int x = 0; x < img.cols; x++){
@@ -65,27 +61,28 @@ void modColor(){
                 }
             }
         }
-        alpha_bgr[3] = alphaval;
-        beta_bgr[3] = betaval;
     }
+    alpha_bgr[channels] = alphaval;
+    beta_bgr[channels] = betaval;
 }
 
 //saves positions of trackbars per channel, sort of works 
 //saving contrast breaks when you change brightness, unsure why
-//this is most likely the problem probably something to do with setTrackbar
 void rgbSet(int, void*){
-   cv::setTrackbarPos(bar_bri, "Color Correction", beta_bgr[channels]);
-   cv::setTrackbarPos(bar_con, "Color Correction", alpha_bgr[channels]);
+    alpha = alpha_bgr[channels];
+    beta = beta_bgr[channels];
+    modColor();
+    cv::setTrackbarPos(bar_bri, "Color Correction", beta);
+    cv::setTrackbarPos(bar_con, "Color Correction", alpha);
+    cv::imshow("Color Correction", result);
 }
 
 void briFunc(int, void*){
-    //if rgb set to a channel, only perform operations on that channel
     modColor(); 
     cv::imshow("Color Correction", result);
 }
 
 void conFunc(int, void*){
-    //if rgb set to a channel, only perform operations on that channel
     modColor();
     cv::imshow("Color Correction", result);
 }
