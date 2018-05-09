@@ -31,9 +31,10 @@ cv::Mat colorCorrection(cv::Mat input){
     //trackbar only takes int, have to divide alpha by 100, so actually contrast is from 0.0 to 3.0 not 0 to 300
     cv::createTrackbar(bar_con, "Color Correction", &alpha, 300, conFunc);
     cv::setTrackbarMin(bar_con, "Color Correction", 0);
-
+    //init the function so it displays a base image
     briFunc(0, 0);
 
+    //waits for Escape key to exit
     for(;;){
         char c = (char)cv::waitKey(20);
         if (c == 27){
@@ -62,12 +63,12 @@ void modColor(){
             }
         }
     }
+    //saves values in an array depending on channel selected
     alpha_bgr[channels] = alphaval;
     beta_bgr[channels] = betaval;
 }
 
-//saves positions of trackbars per channel, sort of works 
-//saving contrast breaks when you change brightness, unsure why
+//saves positions of trackbars per channel, MOSTLY works i think 
 void rgbSet(int, void*){
     alpha = alpha_bgr[channels];
     beta = beta_bgr[channels];

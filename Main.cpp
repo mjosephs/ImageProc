@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 		cout << "4. Make image black and white\n";
 		cout << "5. Binary threshold the image with a slider (press Escape to finish)\n";
 		cout << "6. Variable Median Filter\n";
-		cout << "7. Color correct image with brightness/contrast\n";
+		cout << "7. Color correct image with brightness/contrast (Escape to finish)\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
