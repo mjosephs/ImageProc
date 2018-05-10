@@ -47,8 +47,9 @@ int main(int argc, char** argv) {
 		cout << "4. Make image black and white\n";
 		cout << "5. Globally threshold the image with a slider (press Escape to finish)\n";
 		cout << "6. Variable Median Filter\n";
-		cout << "7. Color correct image with brightness/contrast (Escape to finish)\n";
-		cout << "8. Rotate image by certain degree. Also enter the degree of rotation\n";
+		cout << "7. Variable Average Filter\n";
+		cout << "8. Color correct image with brightness/contrast (Escape to finish)\n";
+		cout << "9. Rotate image by certain degree. Also enter the degree of rotation\n";
 		cout << "0. Save modified image to disk\n";
 
 		//making sure input is an int before continuing
@@ -86,14 +87,25 @@ int main(int argc, char** argv) {
 				cout << "Invalid filter size. Try again." << endl;
 				cin >> filterSize;
 			}
-			img_save = variableMedian(img, filterSize);
+			img_save = variableMedian(img, filterSize, false);
 			displayImage(img_save);
 			break;
 
-		case 7: img_save = colorCorrection(img);
+		case 7:
+			cout << "Input filter size. Must be an odd number > 2" << endl;
+			cin >> filterSize;
+			while (filterSize < 3 || (filterSize % 2) == 0) {
+				cout << "Invalid filter size. Try again." << endl;
+				cin >> filterSize;
+			}
+			img_save = variableMedian(img, filterSize, true);
+			displayImage(img_save);
+			break;
+
+		case 8: img_save = colorCorrection(img);
 				break;
 
-		case 8: cout << "Enter angle of rotation" << endl;
+		case 9: cout << "Enter angle of rotation" << endl;
 				cin >> angle;
 				img_save = Rotation(img, angle);
 				displayImage(img_save);

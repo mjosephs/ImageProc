@@ -3,12 +3,13 @@
 #include <algorithm> 
 
 //Function is loosely based off of https://docs.opencv.org/master/d7/d37/tutorial_mat_mask_operations.html
-cv::Mat variableMedian(cv::Mat img, int filterSize) {
+cv::Mat variableMedian(cv::Mat img, int filterSize, bool avg) {
 	cv::Mat img_out;
 	//add as param: make sure to check before passing that it's %2 != 0;
 	//int filterSize = 3;
 	int boundary = filterSize / 2;
 	std::vector<int> filterVals = { 0 };
+	//bool avg = true;
 
 
 	const int nChannels = img.channels();
@@ -50,22 +51,40 @@ cv::Mat variableMedian(cv::Mat img, int filterSize) {
 
 			}
 
-			///Sort the grid to find median
-			int a = 0;
-			for (int p = 0; p < filterSize*filterSize; ++p)
-			{
-				for (int q = p + 1; q < filterSize*filterSize; ++q)
+			int avgTotal = 0, avgOutput = 0;
+			if(!avg){
+				///Sort the grid to find median
+				int a = 0;
+				for (int p = 0; p < filterSize*filterSize; ++p)
 				{
-					if (filterVals2[p] > filterVals2[q])
+					for (int q = p + 1; q < filterSize*filterSize; ++q)
 					{
-						a = filterVals2[p];
-						filterVals2[p] = filterVals2[q];
-						filterVals2[q] = a;
+						if (filterVals2[p] > filterVals2[q])
+						{
+							a = filterVals2[p];
+							filterVals2[p] = filterVals2[q];
+							filterVals2[q] = a;
+						}
 					}
 				}
+
+				*output++ = cv::saturate_cast<uchar>(filterVals2[(filterSize*filterSize) / 2]);
+				
+			}
+			else {
+				int count = 0;
+				for (int p = 0; p < filterSize*filterSize; ++p) {
+					if (filterVals2[p] >= 0) {
+						avgTotal += filterVals2[p];
+						count++;
+					}
+					
+					//std::cout << "Avg val: " << filterVals2[p] << std::endl;
+				}
+				avgOutput = avgTotal / (count);
+				*output++ = cv::saturate_cast<uchar>(avgOutput);
 			}
 
-			*output++ = cv::saturate_cast<uchar>(filterVals2[(filterSize*filterSize) / 2]);
 			free(filterVals2);
 		}
 
